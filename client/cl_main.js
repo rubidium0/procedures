@@ -53,11 +53,10 @@ Call = (pName, ...args) => {
 
 RegisterNetEvent('callback:receive:client')
 onNet('callback:receive:client', (pName, pRequestId, pData) => {
-    let src = global.source;
     let requestName = pName + pRequestId.toString();
 
     if (callbacks[pName] != null) {
-        let result = callbacks[pName](src, UnpackArray(data));
+        let result = callbacks[pName](UnpackArray(pData));
         emitNet('callback:response:server', requestName, result)
     } else {
         throw new Error('Callback ' + pName + ' not found!');
